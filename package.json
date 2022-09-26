@@ -1,0 +1,12 @@
+{
+  "name": "sdk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "openapi -i api-specs.json -o ./src --client axios --useOptions"
+  },
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.23.0"
+  }
+}
