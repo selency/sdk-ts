@@ -1,3 +1,5 @@
+# [v1.0.6](https://github.com/selency/api/releases/tag/v1.0.6)
+---
 # [v1.0.4](https://github.com/selency/api/releases/tag/v1.0.4)
 ---
 #### What's New
