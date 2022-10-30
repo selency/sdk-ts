@@ -4,10 +4,10 @@
 
 import type { Commission } from './Commission';
 
-export type Price = {
-    id?: string;
-    value?: number;
+export type Pricing = {
     currency?: string;
+    id?: string;
+    price?: number;
     reservedPrice?: number;
     specialPrice?: number;
     proDiscount?: number;

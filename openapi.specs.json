@@ -312,6 +312,180 @@
                 }
             }
         },
+        "\/currency-rates": {
+            "get": {
+                "tags": [
+                    "CurrencyRate"
+                ],
+                "summary": "Get a Currency rates list based on Currency::EUR.",
+                "operationId": "get_app.pricing.currency_rates.list",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "A date, with YYYY-MM-DD format, to get historical rates",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns currency rates based on Currency::EUR",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CurrencyRate"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/pricing\/{id}": {
+            "get": {
+                "tags": [
+                    "Pricing"
+                ],
+                "summary": "Get a Pricing by id.",
+                "operationId": "get_app.pricing.get",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "The id of the pricing",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a pricing",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Pricing"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pricing not found"
+                    }
+                }
+            }
+        },
+        "\/products\/{id}\/pricing": {
+            "post": {
+                "tags": [
+                    "Pricing"
+                ],
+                "operationId": "post_app.pricing.create",
+                "parameters": [
+                    {
+                        "name": "reference",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "The initial price, always in cent",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currency",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "special_price",
+                        "in": "query",
+                        "description": "The special price, always in cent",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "reserved_price",
+                        "in": "query",
+                        "description": "The reserved price, always in cent",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "pro_discount",
+                        "in": "query",
+                        "description": "The discount percent apply for the pro",
+                        "schema": {
+                            "type": "float"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "created price",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Pricing"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error(s) in request body",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ValidationErrors"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "\/products\/metadata\/colors": {
             "get": {
                 "tags": [
@@ -377,143 +551,6 @@
                                     "items": {
                                         "$ref": "#\/components\/schemas\/Style"
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/prices\/{id}": {
-            "get": {
-                "tags": [
-                    "Prices"
-                ],
-                "summary": "Get a Price by id.",
-                "operationId": "get_app.price.detail",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "description": "The id of the price",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Return a price",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/Price"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Price not found"
-                    }
-                }
-            }
-        },
-        "\/products\/{sku}\/prices": {
-            "post": {
-                "tags": [
-                    "Price"
-                ],
-                "operationId": "post_app.price.create",
-                "parameters": [
-                    {
-                        "name": "reference",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "value",
-                        "in": "query",
-                        "description": "The initial price, always in cent",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "locale",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "currency",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "special_price",
-                        "in": "query",
-                        "description": "The special price, always in cent",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "reserved_price",
-                        "in": "query",
-                        "description": "The reserved price, always in cent",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "pro_discount",
-                        "in": "query",
-                        "description": "The discount percent apply for the pro",
-                        "schema": {
-                            "type": "float"
-                        }
-                    },
-                    {
-                        "name": "sku",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "created price",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/Price"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Error(s) in request body",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/ValidationErrors"
                                 }
                             }
                         }
@@ -1113,9 +1150,6 @@
                     "id": {
                         "type": "string"
                     },
-                    "value": {
-                        "type": "integer"
-                    },
                     "label": {
                         "type": "string"
                     },
@@ -1144,6 +1178,33 @@
                     "finishedAt": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "CurrencyRate": {},
+            "Pricing": {
+                "properties": {
+                    "currency": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    },
+                    "reservedPrice": {
+                        "type": "integer"
+                    },
+                    "specialPrice": {
+                        "type": "integer"
+                    },
+                    "proDiscount": {
+                        "type": "integer"
+                    },
+                    "commission": {
+                        "$ref": "#\/components\/schemas\/Commission"
                     }
                 },
                 "type": "object"
@@ -1193,32 +1254,6 @@
                 },
                 "type": "object"
             },
-            "Price": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "value": {
-                        "type": "integer"
-                    },
-                    "currency": {
-                        "type": "string"
-                    },
-                    "reservedPrice": {
-                        "type": "integer"
-                    },
-                    "specialPrice": {
-                        "type": "integer"
-                    },
-                    "proDiscount": {
-                        "type": "integer"
-                    },
-                    "commission": {
-                        "$ref": "#\/components\/schemas\/Commission"
-                    }
-                },
-                "type": "object"
-            },
             "Product": {
                 "properties": {
                     "mainPicture": {
@@ -1236,6 +1271,9 @@
                     "slug": {
                         "type": "string"
                     },
+                    "seller": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
                     "id": {
                         "type": "string"
                     },
@@ -1245,11 +1283,17 @@
                     "shop": {
                         "$ref": "#\/components\/schemas\/Shop"
                     },
-                    "price": {
-                        "$ref": "#\/components\/schemas\/Price"
+                    "pricing": {
+                        "$ref": "#\/components\/schemas\/Pricing"
                     },
                     "commission": {
                         "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "dimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Dimension"
+                        }
                     },
                     "quantity": {
                         "title": "Will be replaced by stock.",
@@ -1262,11 +1306,11 @@
                         "type": "boolean"
                     },
                     "threadId": {
-                        "title": "To be replace by a Thread relation.",
+                        "title": "To be replaced by a Thread relation.",
                         "type": "string"
                     },
                     "flags": {
-                        "title": "To be redifened by a dedicated class \/ enum if necessary.",
+                        "title": "To be redefined by a dedicated class \/ enum if necessary.",
                         "type": "object",
                         "additionalProperties": true
                     },
@@ -1280,6 +1324,19 @@
                     "updatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "_links": {
+                        "properties": {
+                            "seller": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "readOnly": true
                     }
                 },
                 "type": "object"
@@ -1345,6 +1402,9 @@
                     },
                     "commissions": {
                         "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
                     },
                     "legacyId": {
                         "type": "string"
@@ -1501,9 +1561,18 @@
                 },
                 "type": "object"
             },
-            "Order": {
+            "User": {
                 "properties": {
                     "id": {
+                        "type": "string"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "email": {
                         "type": "string"
                     },
                     "legacyId": {
@@ -1512,7 +1581,19 @@
                 },
                 "type": "object"
             },
-            "User": {
+            "Dimension": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "Order": {
                 "properties": {
                     "id": {
                         "type": "string"

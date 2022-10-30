@@ -4,7 +4,6 @@
 
 export type Commission = {
     id?: string;
-    value?: number;
     label?: string;
     description?: string;
     type?: string;
