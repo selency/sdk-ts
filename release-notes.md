@@ -1,297 +1,9 @@
-# [v1.0.6](https://github.com/selency/api/releases/tag/v1.0.6)
----
-# [v1.0.4](https://github.com/selency/api/releases/tag/v1.0.4)
+# [v1.0.9](https://github.com/selency/api/releases/tag/v1.0.9)
 ---
 #### What's New
----
-
-##### `GET` /currency-rates
-
-> Get a Currency rates list based on Currency::EUR.
-
-
-##### `GET` /pricing/{id}
-
-> Get a Pricing by id.
-
-
-##### `POST` /products/{id}/pricing
-
-
-#### What's Deleted
----
-
-##### `GET` /prices/{id}
-
-> Get a Price by id.
-
-
-##### `POST` /products/{sku}/prices
-
-
-#### What's Changed
----
-
-##### `GET` /commissions
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return Commission.
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Deleted property `value` (integer)
-
-##### `POST` /commissions
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Create a Commission
-
-
-* Changed content type : `application/json`
-
-    * Deleted property `value` (integer)
-
-##### `GET` /products/{id}
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return a product
-
-
-* Changed content type : `application/json`
-
-    * Added property `seller` (object)
-
-        * Property `id` (string)
-
-        * Property `firstname` (string)
-
-        * Property `lastname` (string)
-
-        * Property `email` (string)
-
-        * Property `legacyId` (string)
-
-    * Added property `pricing` (object)
-
-        * Property `currency` (string)
-
-        * Property `id` (string)
-
-        * Property `price` (integer)
-
-        * Property `reservedPrice` (integer)
-
-        * Property `specialPrice` (integer)
-
-        * Property `proDiscount` (integer)
-
-        * Property `commission` (object)
-
-            * Property `id` (string)
-
-            * Property `label` (string)
-
-            * Property `description` (string)
-
-            * Property `type` (string)
-
-            * Property `locale` (string)
-
-            * Property `platform` (string)
-
-            * Property `isRetail` (boolean)
-
-            * Property `isSpecialOperation` (boolean)
-
-            * Property `startedAt` (string)
-
-            * Property `finishedAt` (string)
-
-    * Added property `dimensions` (array)
-
-        Items (object):
-
-        * Property `type` (string)
-
-        * Property `value` (number)
-
-    * Added property `_links` (object)
-
-        * Property `seller` (object)
-
-            * Property `href` (string)
-
-    * Deleted property `price` (object)
-
-    * Changed property `shop` (object)
-
-        * Added property `user` (object)
-
-    * Changed property `commission` (object)
-
-        * Deleted property `value` (integer)
-
-##### `GET` /products
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return a list of products
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Added property `seller` (object)
-
-    * Added property `pricing` (object)
-
-    * Added property `dimensions` (array)
-
-    * Added property `_links` (object)
-
-    * Deleted property `price` (object)
-
-    * Changed property `shop` (object)
-
-        * Added property `user` (object)
-
-    * Changed property `commission` (object)
-
-        * Deleted property `value` (integer)
-
-##### `POST` /products
-
-
-###### Return Type:
-
-Changed response : **202 Accepted**
-> Return the product content sent async
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Added property `seller` (object)
-
-    * Added property `pricing` (object)
-
-    * Added property `dimensions` (array)
-
-    * Added property `_links` (object)
-
-    * Deleted property `price` (object)
-
-    * Changed property `shop` (object)
-
-        * Added property `user` (object)
-
-    * Changed property `commission` (object)
-
-        * Deleted property `value` (integer)
-
-##### `GET` /shops/{id}
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return a Shop
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Added property `user` (object)
-
-    * Changed property `commissions` (object)
-
-        * Deleted property `value` (integer)
-
-##### `GET` /movements
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return a list of Stock Movements.
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Changed property `user` (object)
-
-        * Added property `firstname` (string)
-
-        * Added property `lastname` (string)
-
-        * Added property `email` (string)
-
-##### `POST` /movements
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Create a StockMovement
-
-
-* Changed content type : `application/json`
-
-    * Changed property `user` (object)
-
-        * Added property `firstname` (string)
-
-        * Added property `lastname` (string)
-
-        * Added property `email` (string)
-
-# [v1.0.2](https://github.com/selency/api/releases/tag/v1.0.2)
----
-# [v1.0.1](https://github.com/selency/api/releases/tag/v1.0.1)
----
-#### What's New
----
-
-##### `GET` /users/{id}/order-products
-
-
-##### `GET` /order-products/{id}
-
-
-##### `GET` /prices/{id}
-
-> Get a Price by id.
-
-
-##### `POST` /products/{sku}/prices
-
-
-#### What's Deleted
 ---
 
 ##### `GET` /addresses/{id}
-
-
-##### `POST` /auth/login
 
 
 ##### `GET` /cms/color-themes/latest
@@ -302,52 +14,19 @@ Changed response : **200 OK**
 
 ##### `GET` /categories/{id}
 
+> Get a Category by id.
+
 
 ##### `GET` /commissions/current
-
-
-##### `GET` /pickings/{id}
-
-
-##### `POST` /notifications
-
-
-##### `GET` /orders/{id}
-
-
-##### `GET` /currency-rates
-
-> Get a Currency rates list based on Currency::EUR.
-
-
-##### `GET` /pricing/{id}
-
-
-##### `POST` /products/{id}/pricing
-
-
-##### `GET` /products/metadata/colors/{id}
-
-
-##### `GET` /products/metadata/designers/{id}
-
-
-##### `GET` /products/metadata/materials/{id}
-
-
-##### `GET` /products/metadata/styles/{id}
 
 
 ##### `GET` /products/{id}/commission
 
 
-##### `GET` /shops/{id}/commission
+##### `POST` /notifications
 
 
 ##### `GET` /users/{id}/addresses
-
-
-##### `GET` /users/{id}/orders
 
 
 ##### `GET` /users/{id}
@@ -356,20 +35,15 @@ Changed response : **200 OK**
 #### What's Changed
 ---
 
-##### `GET` /addresses/countries
-
-> Get a Countries list.
-
-
 ##### `POST` /commissions
 
 
 ###### Return Type:
 
-New response : **200 OK**
+New response : **201 Created**
 > Create a Commission
 
-Deleted response : **201 Created**
+Deleted response : **200 OK**
 > Create a Commission
 
 ##### `GET` /commissions
@@ -377,39 +51,35 @@ Deleted response : **201 Created**
 
 ###### Parameters:
 
-Deleted: `shopId` in `query`
+Added: `shopId` in `query`
 > Id of shop
 
 
-Deleted: `value` in `query`
+Added: `value` in `query`
 > Value of commission
 
 
 Changed: `platform` in `query`
-> Web or mobile
+> Platform type
 
 
 ###### Return Type:
 
 Changed response : **200 OK**
-> Return Commission.
+> Return a list of commissions
 
 
 * Changed content type : `application/json`
 
     Changed items (object):
 
-    * Added property `value` (integer)
+    * Deleted property `type` (string)
 
-    * Added property `type` (string)
+    * Deleted property `locale` (string)
 
-    * Added property `locale` (string)
-
-    * Added property `platform` (string)
+    * Deleted property `platform` (string)
 
 ##### `GET` /products/metadata/colors
-
-> Get a Color list.
 
 
 ###### Return Type:
@@ -422,50 +92,79 @@ Changed response : **200 OK**
 
     Changed items (object):
 
-    * Deleted property `id` (string)
+    * Added property `id` (string)
 
-##### `GET` /products/metadata/materials
-
-> Get a Material list.
-
-
-##### `GET` /products/metadata/styles
-
-> Get a Style list.
-
-
-##### `GET` /shops/{id}/reviews
-
-> Get feedback of a shop by id.
-
-
-##### `GET` /shops/{id}/statistics
+##### `GET` /pricing/{id}
 
 
 ###### Return Type:
 
 Changed response : **200 OK**
-> Return stats of the shop
+> Return a pricing
 
 
 * Changed content type : `application/json`
 
-    Changed items (object):
+    * Added property `isNegotiable` (boolean)
 
-    * Deleted property `display` (boolean)
+    * Changed property `commission` (object)
 
-##### `GET` /products/{id}
+        * Deleted property `type` (string)
 
-> Get a Product by sku.
+        * Deleted property `locale` (string)
+
+        * Deleted property `platform` (string)
+
+##### `POST` /products/{id}/pricing
 
 
 ###### Parameters:
 
-Added: `sku` in `path`
-> The sku of the product
+Deleted: `reference` in `query`
+
+Deleted: `value` in `query`
+> The initial price, always in cent
 
 
-Changed: `id` in `path`
+Deleted: `locale` in `query`
+
+Deleted: `currency` in `query`
+
+Deleted: `special_price` in `query`
+> The special price, always in cent
+
+
+Deleted: `reserved_price` in `query`
+> The reserved price, always in cent
+
+
+Deleted: `pro_discount` in `query`
+> The discount percent apply for the pro
+
+
+###### Return Type:
+
+New response : **404 Not Found**
+> Product not found
+
+Changed response : **200 OK**
+> created price
+
+
+* Changed content type : `application/json`
+
+    * Added property `isNegotiable` (boolean)
+
+    * Changed property `commission` (object)
+
+        * Deleted property `type` (string)
+
+        * Deleted property `locale` (string)
+
+        * Deleted property `platform` (string)
+
+##### `GET` /products/{id}
+
 
 ###### Return Type:
 
@@ -475,103 +174,99 @@ Changed response : **200 OK**
 
 * Changed content type : `application/json`
 
-    * Added property `price` (object)
+    * Added property `media` (object)
+
+    * Added property `qualityLevel` (integer)
+
+    * Added property `color` (object)
 
         * Property `id` (string)
 
-        * Property `value` (integer)
+        * Property `name` (string)
 
-        * Property `currency` (string)
+        * Property `slug` (string)
 
-        * Property `reservedPrice` (integer)
+        * Property `rgba` (string)
 
-        * Property `specialPrice` (integer)
+    * Added property `material` (object)
 
-        * Property `proDiscount` (integer)
+        * Property `id` (string)
 
-        * Property `commission` (object)
+        * Property `name` (string)
 
-            * Property `id` (string)
+        * Property `slug` (string)
 
-            * Property `value` (integer)
+    * Added property `style` (object)
 
-            * Property `label` (string)
+        * Property `id` (string)
 
-            * Property `description` (string)
+        * Property `name` (string)
 
-            * Property `type` (string)
+        * Property `slug` (string)
 
-            * Property `locale` (string)
+        * Property `description` (string)
 
-            * Property `platform` (string)
+    * Added property `designer` (object)
 
-            * Property `isRetail` (boolean)
+    * Added property `category` (object)
 
-            * Property `isSpecialOperation` (boolean)
+        * Property `id` (string)
 
-            * Property `startedAt` (string)
+        * Property `name` (string)
 
-            * Property `finishedAt` (string)
+        * Property `slug` (string)
 
-    * Added property `isNegotiable` (boolean)
+        * Property `level` (integer)
 
-    * Deleted property `media` (object)
+        * Property `legacyId` (string)
 
-    * Deleted property `seller` (object)
+        * Property `createdAt` (string)
 
-    * Deleted property `qualityLevel` (integer)
+        * Property `updatedAt` (string)
 
-    * Deleted property `pricing` (object)
+    * Added property `authenticity` (object)
 
-    * Deleted property `color` (object)
+        * Property `isAskedFor` (boolean)
 
-    * Deleted property `material` (object)
+        * Property `isApproved` (boolean)
 
-    * Deleted property `style` (object)
+    * Added property `batch` (integer)
 
-    * Deleted property `designer` (object)
+    * Deleted property `isNegotiable` (boolean)
 
-    * Deleted property `category` (object)
+    * Changed property `_links` (object)
 
-    * Deleted property `picking` (object)
+        * Added property `category` (object)
 
-    * Deleted property `authenticity` (object)
+            * Property `href` (string)
 
-    * Deleted property `dimensions` (array)
-
-    * Deleted property `publishedAt` (string)
-
-    * Deleted property `batch` (integer)
-
-    * Deleted property `_links` (object)
+        * Added property `shop` (object)
 
     * Changed property `mainPicture` (object)
 
-        * Added property `role` (string)
+        * Deleted property `role` (string)
 
     * Changed property `i18n` (object)
 
-        * Added property `locale` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `language` (string)
+        * Deleted property `language` (string)
 
-        * Added property `titleSrc` (string)
+        * Deleted property `titleSrc` (string)
 
-        * Added property `descriptionSrc` (string)
+        * Deleted property `descriptionSrc` (string)
 
-    * Changed property `shop` (object)
+    * Changed property `pricing` (object)
 
-        * Deleted property `user` (object)
+        * Added property `isNegotiable` (boolean)
 
     * Changed property `commission` (object)
 
-        * Added property `value` (integer)
+        * Deleted property `type` (string)
 
-        * Added property `type` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `locale` (string)
-
-        * Added property `platform` (string)
+        * Deleted property `platform` (string)
 
 ##### `GET` /products
 
@@ -586,67 +281,57 @@ Changed response : **200 OK**
 
     Changed items (object):
 
-    * Added property `price` (object)
+    * Added property `media` (object)
 
-    * Added property `isNegotiable` (boolean)
+    * Added property `qualityLevel` (integer)
 
-    * Deleted property `media` (object)
+    * Added property `color` (object)
 
-    * Deleted property `seller` (object)
+    * Added property `material` (object)
 
-    * Deleted property `qualityLevel` (integer)
+    * Added property `style` (object)
 
-    * Deleted property `pricing` (object)
+    * Added property `designer` (object)
 
-    * Deleted property `color` (object)
+    * Added property `category` (object)
 
-    * Deleted property `material` (object)
+    * Added property `authenticity` (object)
 
-    * Deleted property `style` (object)
+    * Added property `batch` (integer)
 
-    * Deleted property `designer` (object)
+    * Deleted property `isNegotiable` (boolean)
 
-    * Deleted property `category` (object)
+    * Changed property `_links` (object)
 
-    * Deleted property `picking` (object)
+        * Added property `category` (object)
 
-    * Deleted property `authenticity` (object)
-
-    * Deleted property `dimensions` (array)
-
-    * Deleted property `publishedAt` (string)
-
-    * Deleted property `batch` (integer)
-
-    * Deleted property `_links` (object)
+        * Added property `shop` (object)
 
     * Changed property `mainPicture` (object)
 
-        * Added property `role` (string)
+        * Deleted property `role` (string)
 
     * Changed property `i18n` (object)
 
-        * Added property `locale` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `language` (string)
+        * Deleted property `language` (string)
 
-        * Added property `titleSrc` (string)
+        * Deleted property `titleSrc` (string)
 
-        * Added property `descriptionSrc` (string)
+        * Deleted property `descriptionSrc` (string)
 
-    * Changed property `shop` (object)
+    * Changed property `pricing` (object)
 
-        * Deleted property `user` (object)
+        * Added property `isNegotiable` (boolean)
 
     * Changed property `commission` (object)
 
-        * Added property `value` (integer)
+        * Deleted property `type` (string)
 
-        * Added property `type` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `locale` (string)
-
-        * Added property `platform` (string)
+        * Deleted property `platform` (string)
 
 ##### `POST` /products
 
@@ -661,67 +346,57 @@ Changed response : **202 Accepted**
 
     Changed items (object):
 
-    * Added property `price` (object)
+    * Added property `media` (object)
 
-    * Added property `isNegotiable` (boolean)
+    * Added property `qualityLevel` (integer)
 
-    * Deleted property `media` (object)
+    * Added property `color` (object)
 
-    * Deleted property `seller` (object)
+    * Added property `material` (object)
 
-    * Deleted property `qualityLevel` (integer)
+    * Added property `style` (object)
 
-    * Deleted property `pricing` (object)
+    * Added property `designer` (object)
 
-    * Deleted property `color` (object)
+    * Added property `category` (object)
 
-    * Deleted property `material` (object)
+    * Added property `authenticity` (object)
 
-    * Deleted property `style` (object)
+    * Added property `batch` (integer)
 
-    * Deleted property `designer` (object)
+    * Deleted property `isNegotiable` (boolean)
 
-    * Deleted property `category` (object)
+    * Changed property `_links` (object)
 
-    * Deleted property `picking` (object)
+        * Added property `category` (object)
 
-    * Deleted property `authenticity` (object)
-
-    * Deleted property `dimensions` (array)
-
-    * Deleted property `publishedAt` (string)
-
-    * Deleted property `batch` (integer)
-
-    * Deleted property `_links` (object)
+        * Added property `shop` (object)
 
     * Changed property `mainPicture` (object)
 
-        * Added property `role` (string)
+        * Deleted property `role` (string)
 
     * Changed property `i18n` (object)
 
-        * Added property `locale` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `language` (string)
+        * Deleted property `language` (string)
 
-        * Added property `titleSrc` (string)
+        * Deleted property `titleSrc` (string)
 
-        * Added property `descriptionSrc` (string)
+        * Deleted property `descriptionSrc` (string)
 
-    * Changed property `shop` (object)
+    * Changed property `pricing` (object)
 
-        * Deleted property `user` (object)
+        * Added property `isNegotiable` (boolean)
 
     * Changed property `commission` (object)
 
-        * Added property `value` (integer)
+        * Deleted property `type` (string)
 
-        * Added property `type` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `locale` (string)
-
-        * Added property `platform` (string)
+        * Deleted property `platform` (string)
 
 ##### `GET` /shops/{id}
 
@@ -736,87 +411,11 @@ Changed response : **200 OK**
 
     Changed items (object):
 
-    * Deleted property `user` (object)
-
     * Changed property `commissions` (object)
 
-        * Added property `value` (integer)
+        * Deleted property `type` (string)
 
-        * Added property `type` (string)
+        * Deleted property `locale` (string)
 
-        * Added property `locale` (string)
-
-        * Added property `platform` (string)
-
-##### `GET` /movements
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Return a list of Stock Movements.
-
-
-* Changed content type : `application/json`
-
-    Changed items (object):
-
-    * Changed property `order` (object)
-
-        * Deleted property `reference` (string)
-
-        * Deleted property `status` (string)
-
-        * Deleted property `orderEntries` (array)
-
-        * Deleted property `user` (object)
-
-        * Deleted property `createdAt` (string)
-
-        * Deleted property `updatedAt` (string)
-
-        * Changed property `id` (object -> string)
-
-    * Changed property `user` (object)
-
-        * Deleted property `firstname` (string)
-
-        * Deleted property `lastname` (string)
-
-        * Deleted property `email` (string)
-
-##### `POST` /movements
-
-
-###### Return Type:
-
-Changed response : **200 OK**
-> Create a StockMovement
-
-
-* Changed content type : `application/json`
-
-    * Changed property `order` (object)
-
-        * Deleted property `reference` (string)
-
-        * Deleted property `status` (string)
-
-        * Deleted property `orderEntries` (array)
-
-        * Deleted property `user` (object)
-
-        * Deleted property `createdAt` (string)
-
-        * Deleted property `updatedAt` (string)
-
-        * Changed property `id` (object -> string)
-
-    * Changed property `user` (object)
-
-        * Deleted property `firstname` (string)
-
-        * Deleted property `lastname` (string)
-
-        * Deleted property `email` (string)
+        * Deleted property `platform` (string)
 

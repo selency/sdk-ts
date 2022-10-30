@@ -1,15 +1,15 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Stock API Documentation",
-        "description": "A REST API to manage product stocks.",
+        "title": "Monolith API Documentation",
+        "description": "Selency REST API.",
         "version": "1.0.0"
     },
     "paths": {
         "\/addresses\/countries": {
             "get": {
                 "tags": [
-                    "Countries"
+                    "Address"
                 ],
                 "summary": "Get a Countries list.",
                 "operationId": "get_app.address.country.list",
@@ -23,6 +23,292 @@
                                     "items": {
                                         "$ref": "#\/components\/schemas\/Country"
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/addresses\/{id}": {
+            "get": {
+                "tags": [
+                    "Address"
+                ],
+                "operationId": "get_app.address.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the address",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return an address",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Address"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Address not found"
+                    }
+                }
+            }
+        },
+        "\/cms\/color-themes\/latest": {
+            "get": {
+                "tags": [
+                    "CMS"
+                ],
+                "operationId": "get_app.cms.color_themes.latest",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Type of platform mobile_app or web_app",
+                        "required": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "mobile_app"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return latest ColorTheme for given platform",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/ColorTheme"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/cms\/banners\/latest": {
+            "get": {
+                "tags": [
+                    "CMS"
+                ],
+                "operationId": "get_app.cms.banner.latest",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type of BannerType:MOBILE or BannerType:WEB",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a Banner.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Banner"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/categories\/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get a Category by id.",
+                "operationId": "get_app.category.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a category",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
+        "\/commissions\/current": {
+            "get": {
+                "tags": [
+                    "Commission"
+                ],
+                "operationId": "get_app.commission.current",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Date when the commission should be applied",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "now"
+                        }
+                    },
+                    {
+                        "name": "shopType",
+                        "in": "query",
+                        "description": "Individual or Professional",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "private_person|professional|all"
+                        }
+                    },
+                    {
+                        "name": "isRetail",
+                        "in": "query",
+                        "description": "Does it apply for retail or not",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "true|false"
+                        }
+                    },
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Platform type",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "web_app|mobile|all"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Locale",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "fr"
+                        }
+                    },
+                    {
+                        "name": "types[]",
+                        "in": "query",
+                        "description": "List of commission types",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {},
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "shopId",
+                        "in": "query",
+                        "description": "Id of shop",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Value of commission",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return current commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/products\/{id}\/commission": {
+            "get": {
+                "tags": [
+                    "Commission"
+                ],
+                "operationId": "get_app.commission.product",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return product commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
                                 }
                             }
                         }
@@ -57,7 +343,7 @@
                         "schema": {
                             "type": "string",
                             "default": null,
-                            "pattern": "PRIVATE_PERSON|PROFESSIONAL"
+                            "pattern": "private_person|professional|all"
                         }
                     },
                     {
@@ -68,20 +354,20 @@
                         "allowEmptyValue": true,
                         "schema": {
                             "type": "string",
-                            "default": "false",
+                            "default": null,
                             "pattern": "true|false"
                         }
                     },
                     {
                         "name": "platform",
                         "in": "query",
-                        "description": "Web or mobile",
+                        "description": "Platform type",
                         "required": false,
                         "allowEmptyValue": true,
                         "schema": {
                             "type": "string",
                             "default": null,
-                            "pattern": "Core::WEB_APP|Core::MOBILE"
+                            "pattern": "web_app|mobile|all"
                         }
                     },
                     {
@@ -107,11 +393,33 @@
                             "items": {},
                             "default": null
                         }
+                    },
+                    {
+                        "name": "shopId",
+                        "in": "query",
+                        "description": "Id of shop",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Value of commission",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Return Commission.",
+                        "description": "Return a list of commissions",
                         "content": {
                             "application\/json": {
                                 "schema": {
@@ -131,7 +439,7 @@
                 ],
                 "operationId": "post_app.commission.create",
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Create a Commission",
                         "content": {
                             "application\/json": {
@@ -230,6 +538,26 @@
                 }
             }
         },
+        "\/notifications": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "operationId": "post_app.notification.create",
+                "responses": {
+                    "202": {
+                        "description": "created notification",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NotificationLegacyMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "\/users\/{id}\/order-products": {
             "get": {
                 "tags": [
@@ -315,7 +643,7 @@
         "\/currency-rates": {
             "get": {
                 "tags": [
-                    "CurrencyRate"
+                    "Pricing"
                 ],
                 "summary": "Get a Currency rates list based on Currency::EUR.",
                 "operationId": "get_app.pricing.currency_rates.list",
@@ -399,61 +727,6 @@
                 "operationId": "post_app.pricing.create",
                 "parameters": [
                     {
-                        "name": "reference",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "value",
-                        "in": "query",
-                        "description": "The initial price, always in cent",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "locale",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "currency",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "special_price",
-                        "in": "query",
-                        "description": "The special price, always in cent",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "reserved_price",
-                        "in": "query",
-                        "description": "The reserved price, always in cent",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "pro_discount",
-                        "in": "query",
-                        "description": "The discount percent apply for the pro",
-                        "schema": {
-                            "type": "float"
-                        }
-                    },
-                    {
                         "name": "id",
                         "in": "path",
                         "required": true,
@@ -482,6 +755,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 }
             }
@@ -489,7 +765,7 @@
         "\/products\/metadata\/colors": {
             "get": {
                 "tags": [
-                    "Color"
+                    "Product"
                 ],
                 "summary": "Get a Color list.",
                 "operationId": "get_app.product.metadata.color.list",
@@ -513,7 +789,7 @@
         "\/products\/metadata\/materials": {
             "get": {
                 "tags": [
-                    "Material"
+                    "Product"
                 ],
                 "summary": "Get a Material list.",
                 "operationId": "get_app.product.metadata.material.list",
@@ -537,7 +813,7 @@
         "\/products\/metadata\/styles": {
             "get": {
                 "tags": [
-                    "Style"
+                    "Product"
                 ],
                 "summary": "Get a Style list.",
                 "operationId": "get_app.product.metadata.style.list",
@@ -674,7 +950,7 @@
         "\/homepage-mobile": {
             "get": {
                 "tags": [
-                    "Selection"
+                    "CMS"
                 ],
                 "operationId": "get_app.selection.homepage_mobile",
                 "responses": {
@@ -690,44 +966,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "\/shops\/{id}": {
-            "get": {
-                "tags": [
-                    "Shop"
-                ],
-                "summary": "Get a shop by id.",
-                "operationId": "get_app.shop.detail",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The id of the shop - could be uuid or legacy format",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Return a Shop",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#\/components\/schemas\/Shop"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Shop not found"
                     }
                 }
             }
@@ -797,6 +1035,44 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#\/components\/schemas\/Review"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shop not found"
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get a shop by id.",
+                "operationId": "get_app.shop.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the shop - could be uuid or legacy format",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a Shop",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Shop"
                                     }
                                 }
                             }
@@ -978,7 +1254,7 @@
         "\/movements": {
             "get": {
                 "tags": [
-                    "StockMovement"
+                    "Stock"
                 ],
                 "operationId": "get_app.stock_movement.list",
                 "parameters": [
@@ -1012,7 +1288,7 @@
             },
             "post": {
                 "tags": [
-                    "StockMovement"
+                    "Stock"
                 ],
                 "operationId": "post_app.stock_movement.create",
                 "parameters": [
@@ -1096,6 +1372,77 @@
                     }
                 }
             }
+        },
+        "\/users\/{id}\/addresses": {
+            "get": {
+                "tags": [
+                    "User",
+                    "Address"
+                ],
+                "operationId": "get_app.user.addresses",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user to find addresses for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of addresses",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Address"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "\/users\/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "get_app.user.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a user",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1145,6 +1492,172 @@
                 },
                 "type": "object"
             },
+            "Address": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "postCode": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "extraInfo": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "country": {
+                        "$ref": "#\/components\/schemas\/Country"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "createdBy": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "legacyId": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "_links": {
+                        "properties": {
+                            "user": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "createdBy": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "ColorTheme": {
+                "properties": {
+                    "platform": {
+                        "type": "string"
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "fontColor": {
+                        "type": "string"
+                    },
+                    "startAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "locale": {
+                        "title": "Used locale to override Translation listener`s locale\nthis is not a mapped field of entity metadata, just a simple property.",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Banner": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "backgroundColor": {
+                        "type": "string"
+                    },
+                    "fontColor": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "Commission": {
                 "properties": {
                     "id": {
@@ -1154,15 +1667,6 @@
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "locale": {
-                        "type": "string"
-                    },
-                    "platform": {
                         "type": "string"
                     },
                     "isRetail": {
@@ -1178,6 +1682,23 @@
                     "finishedAt": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "NotificationLegacyMessage": {
+                "properties": {
+                    "type": {
+                        "$ref": "#\/components\/schemas\/NotificationType"
+                    },
+                    "templateKey": {
+                        "type": "string"
+                    },
+                    "templateData": {
+                        "type": "string"
+                    },
+                    "locale": {
+                        "$ref": "#\/components\/schemas\/Lang"
                     }
                 },
                 "type": "object"
@@ -1205,12 +1726,18 @@
                     },
                     "commission": {
                         "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "isNegotiable": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
             },
             "Color": {
                 "properties": {
+                    "id": {
+                        "type": "string"
+                    },
                     "name": {
                         "type": "string"
                     },
@@ -1259,6 +1786,10 @@
                     "mainPicture": {
                         "$ref": "#\/components\/schemas\/Asset"
                     },
+                    "media": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
                     "i18n": {
                         "$ref": "#\/components\/schemas\/LocalizedProduct"
                     },
@@ -1280,14 +1811,38 @@
                     "sku": {
                         "type": "string"
                     },
+                    "status": {
+                        "type": "string"
+                    },
+                    "qualityLevel": {
+                        "type": "integer"
+                    },
                     "shop": {
                         "$ref": "#\/components\/schemas\/Shop"
                     },
                     "pricing": {
                         "$ref": "#\/components\/schemas\/Pricing"
                     },
+                    "color": {
+                        "$ref": "#\/components\/schemas\/Color"
+                    },
+                    "material": {
+                        "$ref": "#\/components\/schemas\/Material"
+                    },
+                    "style": {
+                        "$ref": "#\/components\/schemas\/Style"
+                    },
+                    "designer": {
+                        "$ref": "#\/components\/schemas\/Designer"
+                    },
+                    "category": {
+                        "$ref": "#\/components\/schemas\/Category"
+                    },
                     "commission": {
                         "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "authenticity": {
+                        "$ref": "#\/components\/schemas\/Authenticity"
                     },
                     "dimensions": {
                         "type": "array",
@@ -1299,11 +1854,8 @@
                         "title": "Will be replaced by stock.",
                         "type": "integer"
                     },
-                    "status": {
-                        "type": "string"
-                    },
-                    "isNegotiable": {
-                        "type": "boolean"
+                    "batch": {
+                        "type": "integer"
                     },
                     "threadId": {
                         "title": "To be replaced by a Thread relation.",
@@ -1328,6 +1880,22 @@
                     "_links": {
                         "properties": {
                             "seller": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "category": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "shop": {
                                 "properties": {
                                     "href": {
                                         "type": "string"
@@ -1395,23 +1963,6 @@
                 },
                 "type": "object"
             },
-            "Shop": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "commissions": {
-                        "$ref": "#\/components\/schemas\/Commission"
-                    },
-                    "user": {
-                        "$ref": "#\/components\/schemas\/User"
-                    },
-                    "legacyId": {
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
             "Review": {
                 "properties": {
                     "id": {
@@ -1445,6 +1996,23 @@
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Shop": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "commissions": {
+                        "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "legacyId": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -1518,52 +2086,12 @@
                 },
                 "type": "object"
             },
-            "Asset": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "mediaId": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
-            "LocalizedProduct": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "locale": {
-                        "type": "string"
-                    },
-                    "language": {
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "titleSrc": {
-                        "type": "string"
-                    },
-                    "slug": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "descriptionSrc": {
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
             "User": {
                 "properties": {
                     "id": {
+                        "type": "string"
+                    },
+                    "legacyId": {
                         "type": "string"
                     },
                     "firstname": {
@@ -1574,9 +2102,74 @@
                     },
                     "email": {
                         "type": "string"
-                    },
-                    "legacyId": {
+                    }
+                },
+                "type": "object"
+            },
+            "NotificationType": {
+                "type": "string",
+                "enum": [
+                    "email",
+                    "sms",
+                    "socket"
+                ]
+            },
+            "Lang": {
+                "type": "string",
+                "enum": [
+                    "fr",
+                    "en"
+                ]
+            },
+            "Asset": {
+                "properties": {
+                    "id": {
                         "type": "string"
+                    },
+                    "mediaId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LocalizedProduct": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Designer": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Authenticity": {
+                "properties": {
+                    "isAskedFor": {
+                        "type": "boolean"
+                    },
+                    "isApproved": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
