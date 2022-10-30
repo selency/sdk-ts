@@ -1,0 +1,127 @@
+name: CreateReleaseFromTag
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "api version"
+        type: string
+        # default: main
+env:
+  RELEASE_URI: https://github.com/selency/api/releases/tag/${{ github.event.inputs.ref }}
+  BUILD_PATH: build
+  ARTIFACT_NAME: build-${{  github.event.inputs.ref }}
+  SPECS_FILENAME: openapi.specs.json
+jobs:
+  generate-openapi-specs:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: docker-compose.ci.yml
+      COMPOSE_PROJECT_NAME: api
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: selency/api
+          ref: ${{  github.event.inputs.ref }}
+          token: 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
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+          extensions: mongodb
+          tools: symfony-cli
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Mount PHP dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Refresh PHP dependencies cache
+        run: composer install --prefer-dist --no-interaction --no-ansi --no-progress --no-scripts
+
+      - name: Init build Folder
+        run: mkdir -p build
+
+      - name: Generate Doc
+        run: php bin/console nelmio:apidoc:dump --format=json > ${{ env.BUILD_PATH }}/${{ env.SPECS_FILENAME }}
+
+      # - uses: actions/checkout@v3
+      # - name: Generate Doc3
+      #   run: |
+      #     mkdir -p build
+      #     ls -l
+      #     cp ./api-specs.json ${{ env.BUILD_PATH }}/${{ env.SPECS_FILENAME }}
+      #     echo '------------->${{ env.BUILD_PATH }}/${{ env.SPECS_FILENAME }}'
+      #     cat ${{ env.BUILD_PATH }}/${{ env.SPECS_FILENAME }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.BUILD_PATH }}/${{ env.SPECS_FILENAME }}
+
+  generate-typescript-models:
+    needs: generate-openapi-specs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.BUILD_PATH }}
+      - name: Get Stuffs
+        run: ls -lR
+      - name: install dependencies
+        run: yarn
+      - name: generate files
+        run: yarn openapi -i ./build/${{ env.SPECS_FILENAME }} -o ./build --client axios --useOptions
+
+      - name: Build Diff Markdown
+        continue-on-error: true
+        uses: addnab/docker-run-action@v3
+        with:
+            image: openapitools/openapi-diff:latest
+            options: -v ${{ github.workspace }}:/home
+            run: java -jar /app/openapi-diff.jar /home/${{ env.SPECS_FILENAME }} /home/build/${{ env.SPECS_FILENAME }} --markdown /home/build/diff.md
+
+      - name: concat Changelog
+        continue-on-error: true
+        run: echo "# [${{ github.event.inputs.ref }}](${RELEASE_URI})"  > build/changelog.md |
+          cat build/diff.md >> build/changelog.md |
+          cp build/changelog.md build/release-notes.md |
+          echo "---" >> build/changelog.md |
+          cat changelog.md >> build/changelog.md
+
+      - name: replace files
+        continue-on-error: true
+        run:  |
+          mkdir -p src |
+          rm -fr src/core src/models src/services |
+          mv build/core build/models build/services ./src |
+          mv build/changelog.md . |
+          mv build/release-notes.md . |
+          mv build/diff.md . |
+          mv build/${{ env.SPECS_FILENAME }} .
+      - name: Commit new api version
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: master
+          tagging_message: ${{github.event.inputs.ref}}
+          commit_message: ${{ format('[PROD] new api version {0}', github.event.inputs.ref) }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{github.event.inputs.ref}}
+          release_name: Release ${{github.event.inputs.ref}}
+          body_path: ./release-notes.md
+          draft: false
+          prerelease: false

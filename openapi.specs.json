@@ -1,0 +1,2535 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Monolith API Documentation",
+        "description": "Selency REST API.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "\/addresses\/countries": {
+            "get": {
+                "tags": [
+                    "Address"
+                ],
+                "summary": "Get all countries.",
+                "operationId": "get_app.address.country.list",
+                "responses": {
+                    "200": {
+                        "description": "Return a list of countries",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Country"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/addresses\/{id}": {
+            "get": {
+                "tags": [
+                    "Address"
+                ],
+                "operationId": "get_app.address.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the address",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return an address",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Address"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Address not found"
+                    }
+                }
+            }
+        },
+        "\/auth\/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "operationId": "post_app.auth.login",
+                "responses": {
+                    "201": {
+                        "description": "Return token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/AuthToken"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/cms\/color-themes\/latest": {
+            "get": {
+                "tags": [
+                    "CMS"
+                ],
+                "operationId": "get_app.cms.color_themes.latest",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Type of platform mobile_app or web_app",
+                        "required": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "mobile_app"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return latest ColorTheme for given platform",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/ColorTheme"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/cms\/banners\/latest": {
+            "get": {
+                "tags": [
+                    "CMS"
+                ],
+                "operationId": "get_app.cms.banners.latest",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Type of platform mobile_app or web_app",
+                        "required": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "mobile_app"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return latest Banner for given platform",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Banner"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/categories\/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "operationId": "get_app.category.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a category",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
+        "\/commissions\/current": {
+            "get": {
+                "tags": [
+                    "Commission"
+                ],
+                "operationId": "get_app.commission.current",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Date when the commission should be applied",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "now"
+                        }
+                    },
+                    {
+                        "name": "shopType",
+                        "in": "query",
+                        "description": "Individual or Professional",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "private_person|professional|all"
+                        }
+                    },
+                    {
+                        "name": "isRetail",
+                        "in": "query",
+                        "description": "Does it apply for retail or not",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "true|false"
+                        }
+                    },
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Platform type",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "web_app|mobile|all"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Locale",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "fr"
+                        }
+                    },
+                    {
+                        "name": "types[]",
+                        "in": "query",
+                        "description": "List of commission types",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {},
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "shopId",
+                        "in": "query",
+                        "description": "Id of shop",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Value of commission",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return current commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/commissions": {
+            "get": {
+                "tags": [
+                    "Commission"
+                ],
+                "operationId": "get_app.commission.list",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Date when the commission should be applied",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "now"
+                        }
+                    },
+                    {
+                        "name": "shopType",
+                        "in": "query",
+                        "description": "Individual or Professional",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "private_person|professional|all"
+                        }
+                    },
+                    {
+                        "name": "isRetail",
+                        "in": "query",
+                        "description": "Does it apply for retail or not",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "true|false"
+                        }
+                    },
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Platform type",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null,
+                            "pattern": "web_app|mobile|all"
+                        }
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Locale",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "fr"
+                        }
+                    },
+                    {
+                        "name": "types[]",
+                        "in": "query",
+                        "description": "List of commission types",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {},
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "shopId",
+                        "in": "query",
+                        "description": "Id of shop",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Value of commission",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of commissions",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Commission"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Commission"
+                ],
+                "operationId": "post_app.commission.create",
+                "responses": {
+                    "201": {
+                        "description": "Create a Commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/pickings\/{id}": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "operationId": "get_app.delivery.picking.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the picking",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return picking information",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Picking"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Picking not found"
+                    }
+                }
+            }
+        },
+        "\/health": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "operationId": "get_app.health.check",
+                "parameters": [
+                    {
+                        "name": "logs",
+                        "in": "query",
+                        "description": "Trigger logs",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "error",
+                        "in": "query",
+                        "description": "Returns a specific error code",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return success status if the API is up",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "env": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/media\/{id}\/remove-background": {
+            "post": {
+                "tags": [
+                    "Medium"
+                ],
+                "operationId": "post_app.medium.background_remove",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "recreate",
+                        "in": "query",
+                        "description": "Force recreating the media without background.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove the background of an existing image uuid."
+                    }
+                }
+            }
+        },
+        "\/notifications": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "operationId": "post_app.notification.create",
+                "responses": {
+                    "202": {
+                        "description": "created notification",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NotificationLegacyMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/orders\/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "operationId": "get_app.order.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the order",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return an Order",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Order"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found"
+                    }
+                }
+            }
+        },
+        "\/currency-rates": {
+            "get": {
+                "tags": [
+                    "Pricing"
+                ],
+                "summary": "Get a Currency rates list based on Currency::EUR.",
+                "operationId": "get_app.pricing.currency_rates.list",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "A date, with YYYY-MM-DD format, to get historical rates",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns currency rates based on Currency::EUR",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CurrencyRate"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/pricing\/{id}": {
+            "get": {
+                "tags": [
+                    "Pricing"
+                ],
+                "operationId": "get_app.pricing.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "The id of the pricing",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a pricing",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Pricing"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pricing not found"
+                    }
+                }
+            }
+        },
+        "\/products\/{id}\/pricing": {
+            "post": {
+                "tags": [
+                    "Pricing"
+                ],
+                "operationId": "post_app.pricing.create",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "created price",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Pricing"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error(s) in request body",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ValidationErrors"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/colors": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.color.list",
+                "responses": {
+                    "200": {
+                        "description": "Return a list of colors",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Color"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/materials": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.material.list",
+                "responses": {
+                    "200": {
+                        "description": "Return a list of materials",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Material"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/styles": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.style.list",
+                "responses": {
+                    "200": {
+                        "description": "Return a list of styles",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Style"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/colors\/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.color.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the color",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a color",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Color"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Color not found"
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/designers\/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.designer.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the designer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a designer",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Designer"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Designer not found"
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/materials\/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.material.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the material",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a material",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Material"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Material not found"
+                    }
+                }
+            }
+        },
+        "\/products\/metadata\/styles\/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.metadata.style.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the style",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a style",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Style"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Style not found"
+                    }
+                }
+            }
+        },
+        "\/products\/{id}\/commission": {
+            "get": {
+                "tags": [
+                    "Product",
+                    "Commission"
+                ],
+                "operationId": "get_app.product.commission",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return product commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/products\/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "get_app.product.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a product",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        },
+        "\/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get a filtered Product list.",
+                "operationId": "get_app.product.list",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "query",
+                        "description": "List of sku",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    {
+                        "name": "sku[]",
+                        "in": "query",
+                        "description": "List of SKU",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {},
+                            "default": []
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of products",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "post_app.product.save",
+                "responses": {
+                    "202": {
+                        "description": "Return the product content sent async",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/homepage-mobile": {
+            "get": {
+                "tags": [
+                    "CMS"
+                ],
+                "operationId": "get_app.selection.homepage_mobile",
+                "responses": {
+                    "200": {
+                        "description": "Return an array of one selection for the mobile homepage",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Selection"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}\/reviews\/count": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get feedback of a shop by id.",
+                "operationId": "get_app.shop.reviews_count",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The reviews of the shop",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the number of reviews of the shop",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Review"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shop not found"
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}\/commission": {
+            "get": {
+                "tags": [
+                    "Shop",
+                    "Commission"
+                ],
+                "operationId": "get_app.shop.commission",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return shop commission",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Commission"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}\/reviews": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get reviews of a shop by id.",
+                "operationId": "get_app.shop.reviews_get",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The reviews of the shop",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return reviews of the shop",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Review"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shop not found"
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get a shop by id.",
+                "operationId": "get_app.shop.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the shop - could be uuid or legacy format",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a Shop",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Shop"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shop not found"
+                    }
+                }
+            }
+        },
+        "\/shops\/{id}\/statistics": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get stats of a shop by id.",
+                "operationId": "get_app.shop.statistics",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the shop",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return stats of the shop",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Statistics"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Stats\/Shop not found"
+                    }
+                }
+            }
+        },
+        "\/stocks\/{sku}": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "operationId": "get_app.stock.detail",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a Stock",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Stock"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Stock"
+                ],
+                "operationId": "put_app.stock.update",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Write a Stock",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "quantity": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error(s) in request body",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ValidationErrors"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/stocks": {
+            "post": {
+                "tags": [
+                    "Stock"
+                ],
+                "operationId": "post_app.stock.create",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a Stock",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Stock"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error(s) in request body",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ValidationErrors"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/movements": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "operationId": "get_app.stock_movement.list",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "query",
+                        "description": "Filter by SKU",
+                        "required": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of Stock Movements.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/StockMovement"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Stock"
+                ],
+                "operationId": "post_app.stock_movement.create",
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user.id",
+                        "in": "query",
+                        "description": "Existing user UUID, use user.legacyId if the user is not already imported.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user.legacyId",
+                        "in": "query",
+                        "description": "Will create or find an existing user with that legacyId.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order.id",
+                        "in": "query",
+                        "description": "Existing order UUID, use order.legacyId if the order is not already imported.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order.legacyId",
+                        "in": "query",
+                        "description": "Will create or find an existing order with that legacyId.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a StockMovement",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/StockMovement"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error(s) in request body",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ValidationErrors"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/users\/{id}\/addresses": {
+            "get": {
+                "tags": [
+                    "User",
+                    "Address"
+                ],
+                "operationId": "get_app.user.addresses",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the user to find addresses for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of addresses",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Address"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "\/users\/{id}\/orders": {
+            "get": {
+                "tags": [
+                    "User",
+                    "Order"
+                ],
+                "operationId": "get_app.user.orders",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The identifier of the user to find orders for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Status of orders new, pending_payment, paid, canceled, expired, archived, unknown",
+                        "required": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a list of orders",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/Order"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "\/users\/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "operationId": "get_app.user.detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a user",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidationErrors": {
+                "description": "Validation errors",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "An error occurred"
+                    },
+                    "detail": {
+                        "type": "string",
+                        "example": "quantity: This value should not be null."
+                    },
+                    "violations": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "propertyPath": {
+                                    "type": "string",
+                                    "example": "quantity"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "This value should not be null."
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "example": "ad32d13f-c3d4-423b-909a-857c961eb720"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Country": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Address": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "legacyId": {
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "streetName": {
+                        "type": "string"
+                    },
+                    "postCode": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "extraInfo": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "$ref": "#\/components\/schemas\/Country"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "createdBy": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "_links": {
+                        "properties": {
+                            "user": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "createdBy": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuthToken": {
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ColorTheme": {
+                "properties": {
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "platform": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "fontColor": {
+                        "type": "string"
+                    },
+                    "startAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "locale": {
+                        "title": "Used locale to override Translation listener`s locale\nthis is not a mapped field of entity metadata, just a simple property.",
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Banner": {
+                "properties": {
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "platform": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "backgroundColor": {
+                        "type": "string"
+                    },
+                    "fontColor": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Commission": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "isRetail": {
+                        "type": "boolean"
+                    },
+                    "isSpecialOperation": {
+                        "type": "boolean"
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Picking": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#\/components\/schemas\/Address"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "_links": {
+                        "properties": {
+                            "address": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "NotificationLegacyMessage": {
+                "properties": {
+                    "type": {
+                        "$ref": "#\/components\/schemas\/NotificationType"
+                    },
+                    "templateKey": {
+                        "type": "string"
+                    },
+                    "templateData": {
+                        "type": "string"
+                    },
+                    "locale": {
+                        "$ref": "#\/components\/schemas\/Lang"
+                    }
+                },
+                "type": "object"
+            },
+            "Order": {
+                "properties": {
+                    "id": {
+                        "$ref": "#\/components\/schemas\/Uuid"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "orderEntries": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/OrderEntry"
+                        }
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "CurrencyRate": {
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "rate": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "Pricing": {
+                "properties": {
+                    "currency": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    },
+                    "reservedPrice": {
+                        "type": "integer"
+                    },
+                    "specialPrice": {
+                        "type": "integer"
+                    },
+                    "commission": {
+                        "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "isNegotiable": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Color": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "rgba": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Material": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Style": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Designer": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "properties": {
+                    "mainPicture": {
+                        "$ref": "#\/components\/schemas\/Asset"
+                    },
+                    "media": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "i18n": {
+                        "$ref": "#\/components\/schemas\/LocalizedProduct"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "seller": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "qualityLevel": {
+                        "type": "integer"
+                    },
+                    "shop": {
+                        "$ref": "#\/components\/schemas\/Shop"
+                    },
+                    "pricing": {
+                        "$ref": "#\/components\/schemas\/Pricing"
+                    },
+                    "color": {
+                        "$ref": "#\/components\/schemas\/Color"
+                    },
+                    "material": {
+                        "$ref": "#\/components\/schemas\/Material"
+                    },
+                    "style": {
+                        "$ref": "#\/components\/schemas\/Style"
+                    },
+                    "designer": {
+                        "$ref": "#\/components\/schemas\/Designer"
+                    },
+                    "category": {
+                        "$ref": "#\/components\/schemas\/Category"
+                    },
+                    "commission": {
+                        "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "picking": {
+                        "$ref": "#\/components\/schemas\/Picking"
+                    },
+                    "authenticity": {
+                        "$ref": "#\/components\/schemas\/Authenticity"
+                    },
+                    "dimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Dimension"
+                        }
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "quantity": {
+                        "title": "Will be replaced by stock.",
+                        "type": "integer"
+                    },
+                    "batch": {
+                        "type": "integer"
+                    },
+                    "threadId": {
+                        "title": "To be replaced by a Thread relation.",
+                        "type": "string"
+                    },
+                    "flags": {
+                        "title": "To be redefined by a dedicated class \/ enum if necessary.",
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "_links": {
+                        "properties": {
+                            "seller": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "category": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "shop": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Selection": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "inserts": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "allowSoldOut": {
+                        "type": "boolean"
+                    },
+                    "isMobile": {
+                        "type": "boolean"
+                    },
+                    "i18n": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "products": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "startAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Review": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "ratingId": {
+                        "type": "string"
+                    },
+                    "productReviewId": {
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "string"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Shop": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "commissions": {
+                        "$ref": "#\/components\/schemas\/Commission"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Statistics": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "rating": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "daysOpeningShopTimeCount": {
+                        "type": "integer"
+                    },
+                    "productsForSaleCount": {
+                        "type": "integer"
+                    },
+                    "productsSoldCount": {
+                        "type": "integer"
+                    },
+                    "totalReviewsCount": {
+                        "type": "integer"
+                    },
+                    "display": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Stock": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "StockMovement": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "$ref": "#\/components\/schemas\/Order"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/User"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "NotificationType": {
+                "type": "string",
+                "enum": [
+                    "email",
+                    "sms",
+                    "socket"
+                ]
+            },
+            "Lang": {
+                "type": "string",
+                "enum": [
+                    "fr",
+                    "en"
+                ]
+            },
+            "Uuid": {
+                "properties": {},
+                "type": "object"
+            },
+            "OrderEntry": {
+                "properties": {
+                    "id": {
+                        "$ref": "#\/components\/schemas\/Uuid"
+                    },
+                    "order": {
+                        "$ref": "#\/components\/schemas\/Order"
+                    },
+                    "product": {
+                        "$ref": "#\/components\/schemas\/Product"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "legacyId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Asset": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "mediaId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "LocalizedProduct": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Authenticity": {
+                "properties": {
+                    "isAskedFor": {
+                        "type": "boolean"
+                    },
+                    "isApproved": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Dimension": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
